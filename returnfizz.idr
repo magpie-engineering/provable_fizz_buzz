@@ -16,3 +16,6 @@ fizzBuzzReturn x with (modNat x (the Nat 3), modNat x (the Nat 5))
   | (Z, _) = Fizz
   | (_, Z) = Buzz
   | _ = Normal x
+
+fizzBuzzReturnString: (x: Nat) -> String
+fizzBuzzReturnString x = show(fizzBuzzReturn x)
