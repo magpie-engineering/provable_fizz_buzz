@@ -1,3 +1,4 @@
+import Data.Nat
 data FizzBuzzReturn =
   Fizz
   | Buzz
@@ -10,12 +11,13 @@ Show FizzBuzzReturn where
   show FizzBuzz = "fizzbuzz"
   show (Normal x) = show x
 
-fizzBuzzReturn: (x: Nat) -> FizzBuzzReturn
-fizzBuzzReturn x with (modNat x (the Nat 3), modNat x (the Nat 5))
-  | (Z, Z) = FizzBuzz
-  | (Z, _) = Fizz
-  | (_, Z) = Buzz
-  | _ = Normal x
 
-fizzBuzzReturnString: (x: Nat) -> String
+partial fizzBuzzReturn: (x: Nat) -> FizzBuzzReturn
+fizzBuzzReturn x with (modNat x (the Nat 3), modNat x (the Nat 5))
+  fizzBuzzReturn x | (Z, Z) = FizzBuzz
+  fizzBuzzReturn x | (Z, _) = Fizz
+  fizzBuzzReturn x | (_, Z) = Buzz
+  fizzBuzzReturn x | _ = Normal x
+
+partial fizzBuzzReturnString: (x: Nat) -> String
 fizzBuzzReturnString x = show(fizzBuzzReturn x)
