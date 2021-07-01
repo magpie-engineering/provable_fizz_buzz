@@ -1,3 +1,5 @@
+import Decidable.Equality
+
 data DivisiblebyX : Nat -> Nat -> Type where
   Base: DivisiblebyX x x
   Multiple: DivisiblebyX x y -> DivisiblebyX x (x+y)
@@ -81,3 +83,14 @@ fizzbuzz x = case (divisibleby3 x, divisibleby5 x) of
 
 fizzbuzz_string: (x: Nat) -> String
 fizzbuzz_string x = show $ fizzbuzz x
+
+
+fizzbuzz_loop: (n: Nat) -> (end: Nat) -> IO ()
+fizzbuzz_loop n end with (decEq n end)
+  fizzbuzz_loop n end | Yes prf = pure ()
+  fizzbuzz_loop n end | No contra =  do
+    putStrLn $ show $ fizzbuzz n
+    fizzbuzz_loop (S n) end
+
+main: IO ()
+main = fizzbuzz_loop 1 101
